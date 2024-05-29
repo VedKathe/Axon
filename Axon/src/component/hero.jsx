@@ -13,7 +13,7 @@ const navigate = useNavigate();
     });
 
     setTimeout(() => {
-        navigate("/signup");
+        navigate("/dashboard");
       }, 600);
   };
 

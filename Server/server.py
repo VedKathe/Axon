@@ -96,8 +96,6 @@ def extract_text_from_pdf(file):
 CORS(app)
 @app.route('/getQA', methods=['POST'])
 def getQA():
-    global CONTEXT
-
     project_dir = os.path.dirname(os.path.abspath(__file__))
     context_file_path = os.path.join(project_dir, 'context.json')
 
@@ -105,42 +103,49 @@ def getQA():
     data = request.get_json()
     prompt = data.get('prompt')
 
-    with open(context_file_path, 'r') as f:
-        context = json.load(f)
+    if not prompt:
+        return jsonify({'error': 'No prompt provided'}), 400
+
+    # Load the context from context.json
+    try:
+        with open(context_file_path, 'r') as f:
+            context = json.load(f)
+    except FileNotFoundError:
+        return jsonify({'error': 'context.json file not found'}), 500
+    except json.JSONDecodeError:
+        return jsonify({'error': 'Error decoding context.json'}), 500
 
     # Get the value of the 'Data' field
     context_data = context.get('Data', None)
 
-    # Print the value of the 'Data' field, or a message if it's not found
-    if context_data is not None:
-        print(context_data)
-    else:
-        print("'Data' field not found in context.json")
-
-    if not prompt:
-        return jsonify({'error': 'No prompt provided'}), 400
+    if context_data is None:
+        return jsonify({'error': "'Data' field not found in context.json"}), 500
 
     # Pass the prompt and context to the Ollama API
     url = 'http://localhost:11434/api/generate'
     headers = {'Content-Type': 'application/json'}
     post_data = {
-                    'model': 'mistral',
-                    'prompt': prompt,
-                    "stream": False,
-                    "context": context_data,  # Use the JSON-formatted string here
-                    'format': 'json',
-                }
+        'model': 'mistral',
+        'prompt': prompt,
+        "stream": False,
+        "context": context_data,
+        "template": "return only the awnser and nothing else as a string in the response field"
+    }
+
     response = requests.post(url, headers=headers, json=post_data)
 
     if response.status_code != 200:
         return jsonify({'error': 'Failed to generate response from Ollama'}), 500
 
     # Extract the generated response from the Ollama API response
-    generated_response = response.json().get('response')
+    response_json = response.json()
+    generated_response = response_json.get('response')
 
-    # Use the CONTEXT variable to generate the final response
-    # (You can add your own logic here to generate the response)
-    final_response = f"{generated_response}"
+    if generated_response is None:
+        return jsonify({'error': 'No response from Ollama API'}), 500
+
+    # Generate the final response
+    final_response = generated_response
 
     return jsonify({'response': final_response}), 200
 #################################################################################

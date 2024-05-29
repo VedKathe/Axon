@@ -50,6 +50,22 @@ h2{
   gap: 1rem;
 }
 
+.left_div{
+  z-index: -0;
+  box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.137);
+}
+
+.tab{
+  background-color: pink;
+  width: 100%;
+  height: max-content;
+}
+
+.send_button:hover{
+  transform: scale(1.1);
+  transition: 200ms;
+}
+
 @media only screen and (max-width: 600px) {
   .hero_container{
     padding: 2rem 3rem;
