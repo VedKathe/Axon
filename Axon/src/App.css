@@ -1,0 +1,65 @@
+h2{
+  color: rgb(0, 102, 255);
+}
+
+.get_started_button{
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  background-color: black;
+  padding: .5rem .6rem; 
+  border-radius: .5rem; 
+  cursor: pointer;
+  transition: 300ms;
+  border: none;
+}
+
+.get_started_button:hover{
+  box-shadow: .2rem .3rem rgba(0, 0, 0, 0.096);
+  transition: 300ms;
+}
+
+.login_hover{
+  color: rgb(0, 102, 255);
+  text-decoration: none; 
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login_hover:hover{
+  color: rgb(126, 178, 255);
+  text-shadow: 0rem 0rem .1rem rgba(0, 0, 0, 0.24);
+}
+
+.pipe_image{
+  width: 70%;
+  flex: 1;
+}
+
+.img_axon_pipe{
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.hero_container{
+  padding: 2rem 3rem;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .hero_container{
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .img_axon_pipe{
+    display: none;
+  }
+}
