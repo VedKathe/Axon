@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import re
 import requests
+import json
 
 app = Flask(__name__)
 
@@ -36,7 +37,7 @@ def execute():
 #################################################################################
 @app.route('/uploadFile', methods=['POST'])
 def uploadFile():
-    global CONTEXT  # Indicate that we're referring to the global CONTEXT variable
+    global CONTEXT
 
     if 'pdfFile' not in request.files:
         return jsonify({'response': 'No file part'}), 400
@@ -70,6 +71,12 @@ def uploadFile():
             # Store the context for the chunk in the CONTEXT array
             CONTEXT.extend(context)
 
+        # Write the CONTEXT variable to a JSON file in the project root
+        with open('context.json', 'w') as f:
+            # Write a JSON object to the file
+            json_obj = {'Data': CONTEXT}
+            json.dump(json_obj, f)
+
         return jsonify({
             'response': remove_white_spaces(pdf_text),
             'context': CONTEXT
@@ -91,22 +98,37 @@ CORS(app)
 def getQA():
     global CONTEXT
 
+    project_dir = os.path.dirname(os.path.abspath(__file__))
+    context_file_path = os.path.join(project_dir, 'context.json')
+
     # Get the prompt from the request body
     data = request.get_json()
     prompt = data.get('prompt')
-    context = data.get('context')
+
+    with open(context_file_path, 'r') as f:
+        context = json.load(f)
+
+    # Get the value of the 'Data' field
+    context_data = context.get('Data', None)
+
+    # Print the value of the 'Data' field, or a message if it's not found
+    if context_data is not None:
+        print(context_data)
+    else:
+        print("'Data' field not found in context.json")
 
     if not prompt:
         return jsonify({'error': 'No prompt provided'}), 400
 
-    # Pass the prompt to the Ollama API
+    # Pass the prompt and context to the Ollama API
     url = 'http://localhost:11434/api/generate'
     headers = {'Content-Type': 'application/json'}
     post_data = {
                     'model': 'mistral',
                     'prompt': prompt,
                     "stream": False,
-                    "context": context
+                    "context": context_data,  # Use the JSON-formatted string here
+                    'format': 'json',
                 }
     response = requests.post(url, headers=headers, json=post_data)
 

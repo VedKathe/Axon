@@ -5,6 +5,7 @@ export default function Ask() {
   const [input, setInput] = useState('')
   const [file, setFile] = useState(null)
   const [data, setData] = useState(null)
+  const [result, setResult] = useState(null)
 
   const handleInputChange = (event) => {
     setInput(event.target.value)
@@ -29,12 +30,17 @@ export default function Ask() {
     reader.readAsText(file)
   }
 
-  const handleSendClick = () => {
-    axios.post('http://127.0.0.1:5000/getQA', {
-      prompt: input,
-      context: data
-    })
-  }
+  const handleSendClick = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/getQA', {
+        prompt: input,
+      });
+      setResult(response.data.response);
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };  
 
   return (
     <div>
