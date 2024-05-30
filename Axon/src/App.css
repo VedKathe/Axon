@@ -56,9 +56,10 @@ h2{
 }
 
 .tab{
-  background-color: pink;
   width: 100%;
   height: max-content;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.103);
+  padding: .7rem 0rem;
 }
 
 .send_button:hover{

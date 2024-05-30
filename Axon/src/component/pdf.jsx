@@ -62,7 +62,6 @@ export default function PDF() {
       </button>
       <pre>{pdfText}</pre>
       <pre>{context}</pre>
-      <Ask/>
     </div>
   )
 }

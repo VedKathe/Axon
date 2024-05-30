@@ -37,7 +37,8 @@ def execute():
 #################################################################################
 @app.route('/uploadFile', methods=['POST'])
 def uploadFile():
-    global CONTEXT
+    project_dir = os.path.dirname(os.path.abspath(__file__))
+    context_file_path = os.path.join(project_dir, 'context.json')
 
     if 'pdfFile' not in request.files:
         return jsonify({'response': 'No file part'}), 400
@@ -51,8 +52,10 @@ def uploadFile():
         pdf_text = extract_text_from_pdf(file)
 
         # Chunk the text into sizes of 200 words
-        CONTEXT = []  # Reset the CONTEXT variable for each new file
         chunks = chunk_text(pdf_text)
+
+        # Initialize an empty list for the new context
+        new_context = []
 
         # Send each chunk of text to Ollama to generate embeddings and wait for the response
         for i, chunk in enumerate(chunks):
@@ -68,18 +71,28 @@ def uploadFile():
             context = response['context']
             print(f"Received context for chunk {i+1}.")
 
-            # Store the context for the chunk in the CONTEXT array
-            CONTEXT.extend(context)
+            # Store the context for the chunk in the new_context list
+            new_context.extend(context)
 
-        # Write the CONTEXT variable to a JSON file in the project root
-        with open('context.json', 'w') as f:
-            # Write a JSON object to the file
-            json_obj = {'Data': CONTEXT}
+        # Load the existing context from context.json, if it exists
+        if os.path.isfile(context_file_path):
+            with open(context_file_path, 'r') as f:
+                context = json.load(f)
+                existing_context = context.get('Data', [])
+        else:
+            existing_context = []
+
+        # Extend the existing context with the new context
+        updated_context = existing_context + new_context
+
+        # Write the updated context to the context.json file
+        with open(context_file_path, 'w') as f:
+            json_obj = {'Data': updated_context}
             json.dump(json_obj, f)
 
         return jsonify({
             'response': remove_white_spaces(pdf_text),
-            'context': CONTEXT
+            'context': updated_context
         }), 200
 
     return jsonify({'response': 'Invalid file format. Please upload a PDF file.'}), 400
@@ -106,12 +119,16 @@ def getQA():
     if not prompt:
         return jsonify({'error': 'No prompt provided'}), 400
 
+    # Check if context.json file exists, if not, create an empty one
+    if not os.path.isfile(context_file_path):
+        with open(context_file_path, 'w') as f:
+            json.dump({}, f)
+        return jsonify({'message': 'context.json file created'}), 200
+
     # Load the context from context.json
     try:
         with open(context_file_path, 'r') as f:
             context = json.load(f)
-    except FileNotFoundError:
-        return jsonify({'error': 'context.json file not found'}), 500
     except json.JSONDecodeError:
         return jsonify({'error': 'Error decoding context.json'}), 500
 
@@ -124,12 +141,12 @@ def getQA():
     # Pass the prompt and context to the Ollama API
     url = 'http://localhost:11434/api/generate'
     headers = {'Content-Type': 'application/json'}
-    post_data = {
+    post_data = { 
         'model': 'mistral',
         'prompt': prompt,
         "stream": False,
         "context": context_data,
-        "template": "return only the awnser and nothing else as a string in the response field"
+        "template": "Use the following pieces of information to awnser the quiestions given as prompt, also only awnser to the point, nothing extra."
     }
 
     response = requests.post(url, headers=headers, json=post_data)

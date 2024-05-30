@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { IoMdSend } from "react-icons/io";
+import { MdOutlineChat } from "react-icons/md";
 
 export default function Ask() {
   const [input, setInput] = useState('');
@@ -66,11 +67,24 @@ export default function Ask() {
   };
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'end', padding: '1rem', gap: '.7rem' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'end', padding: '.5rem 1rem 1rem 1rem', gap: '.7rem' }}>
+
+
+    {
+      !stack.length && (
+        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+          <div style={{backgroundColor: 'white', boxShadow: '0rem 0rem .4rem rgba(0, 0, 0, 0.237)', padding: '1.7rem', borderRadius: '2rem', display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '2rem'}}>
+            <MdOutlineChat />
+            <p style={{fontFamily: 'Kanit, sans-serif', fontWeight: '800', fontStyle: 'italic'}}> AXON</p>
+          </div>
+        </div>
+      )
+    }
+
       <div className='message_stack' style={{overflowY: 'scroll'}}>
         {stack.map((entry, index) => (
           <div key={index} style={{ textAlign: entry.role === 'user' ? 'right' : 'left' }}>
-            <div style={{ display: 'inline-block', padding: '10px', borderRadius: '10px', margin: '5px', backgroundColor: entry.role === 'user' ? '#E6E6E6' : '#E6E6E6' }}>
+            <div style={{ display: 'inline-block', padding: '10px', borderRadius: '10px', margin: '5px', backgroundColor: entry.role === 'user' ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)', color: 'black', maxWidth: '60%', boxShadow: '0rem 0rem .4rem rgba(0, 0, 0, 0.237)', textAlign: 'left'}}>
               {entry.response}
             </div>
           </div>

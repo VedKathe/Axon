@@ -13,12 +13,12 @@ export default function Dashboard() {
   return (
     <>
     <div style={{height: '100vh', width: '100vw', overflowY: 'hidden', display: 'flex'}}>
-        <div className='left_div' style={{height: '100%', backgroundColor: 'grey', display: 'flex', flex: '.2', flexDirection: 'column'}}>
-            <div className='tab' style={{backgroundColor: 'blue', width: '100%', height: 'max-content'}} onClick={() => handleOptionClick('other')}>AXON</div>
+        <div className='left_div' style={{height: '100%', display: 'flex', flex: '.2', flexDirection: 'column'}}>
+            <div className='tab' style={{ width: '100%', height: 'max-content'}} onClick={() => handleOptionClick('other')}>AXON</div>
             <div className='tab'  onClick={() => handleOptionClick('analyze')}>Analyze</div>
         </div>
 
-        <div className='right_div' style={{height: '100%', backgroundColor: 'white', display: 'flex', flex: '1', overflowY: 'scroll'}}>
+        <div className='right_div' style={{height: '100%', backgroundColor: 'white', display: 'flex', flex: '1', overflowY: 'hidden'}}>
             {selectedOption === 'analyze' && <PDF />}
             {selectedOption === 'other' && <Ask />}
         </div>
