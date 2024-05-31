@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Ask from './ask';
+import { MdOutlineChat } from "react-icons/md";
+import { FaCloudUploadAlt } from "react-icons/fa";
 
 export default function PDF() {
   const [pdfText, setPdfText] = useState('');
@@ -53,15 +54,25 @@ export default function PDF() {
   }
 
   return (
-    <div>
-      <h1>PDF Text Extraction</h1>
-      <input type="file" id="pdfFile" accept="application/pdf" /> {/* Add id attribute to input element */}
-      <button onClick={handleFileSubmit}>Send File</button> {/* Add separate button to send file */}
-      <button onClick={DownloadJsonFile} disabled={loading || !context}> {/* Disable button if loading or context is empty */}
-        {loading ? 'Loading...' : 'Download Context'}{/* Show loading message if loading */}
-      </button>
-      <pre>{pdfText}</pre>
-      <pre>{context}</pre>
+    <>
+    <div style={{width: '100%'}}>
+
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{backgroundColor: 'white', boxShadow: '0rem 0rem .4rem rgba(0, 0, 0, 0.237)', padding: '1.7rem', borderRadius: '2rem', display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '2rem', flexDirection: 'column', justifyContent: 'center'}}>
+          <div style={{ display: 'flex', alignItems: "center"}}>
+            <MdOutlineChat />
+            <p style={{fontFamily: 'Kanit, sans-serif', fontWeight: '800', fontStyle: 'italic'}}> AXON</p>
+          </div>
+
+          <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+            <input style={{backgroundColor: 'rgb(20, 20, 20)', display: 'flex', flexDirection: 'column', borderRadius: '1rem', color: 'white', padding: '3rem 1rem', border: '.4rem solid white'}} type="file" id="pdfFile" accept="application/pdf" />
+            <button style={{backgroundColor: 'transparent', border: 'none', textAlign: 'center'}} onClick={handleFileSubmit}>{loading ? 'Sending...' : <FaCloudUploadAlt style={{fontSize: '3rem'}} className='send_button' />}</button>
+          </div>
+        </div>
+
+      </div>
+
     </div>
+    </>
   )
 }

@@ -53,18 +53,28 @@ h2{
 .left_div{
   z-index: -0;
   box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.137);
+  background-color: rgb(20, 20, 20);
+  color: white;
+  font-family: Kanit, sans-serif;
+  font-size: larger;
 }
 
 .tab{
   width: 100%;
   height: max-content;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.103);
   padding: .7rem 0rem;
 }
 
 .send_button:hover{
   transform: scale(1.1);
   transition: 200ms;
+}
+
+.message_stack{
+  scrollbar-color: black transparent;
+  scrollbar-width: thin;
+  scrollbar-arrow-color: white;
+  scrollbar-gutter: n;
 }
 
 @media only screen and (max-width: 600px) {
