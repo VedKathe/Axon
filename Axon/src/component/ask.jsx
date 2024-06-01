@@ -13,6 +13,7 @@ export default function Ask() {
     setInput(event.target.value);
   };
 
+
   const handleSendClick = async () => {
     // Add the user's input to the stack before sending the request
     const newPrompt = {
@@ -84,7 +85,7 @@ export default function Ask() {
       <div className='message_stack' style={{overflowY: 'scroll'}}>
         {stack.map((entry, index) => (
           <div key={index} style={{ textAlign: entry.role === 'user' ? 'right' : 'left' }}>
-            <div style={{ display: 'inline-block', padding: '10px', borderRadius: '10px', margin: '5px', backgroundColor: entry.role === 'user' ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)', color: 'black', maxWidth: '60%', boxShadow: '0rem 0rem .4rem rgba(0, 0, 0, 0.237)', textAlign: 'left'}}>
+            <div style={{ display: 'inline-block', padding: '10px', borderRadius: '10px', margin: '5px', backgroundColor: entry.role === 'user' ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)', color: 'black', maxWidth: '60%', boxShadow: entry.role === 'user' ? '0rem 0rem .4rem rgba(0, 174, 255, 0.300)' : '0rem 0rem .4rem rgba(212, 0, 255, 0.300)', textAlign: 'left'}}>
               {entry.response}
             </div>
           </div>
@@ -93,7 +94,7 @@ export default function Ask() {
 
       <div style={{ backgroundColor: 'white', padding: '.6rem 1.2rem', borderRadius: '1rem', display: 'flex', gap: '1rem', justifyContent: 'center', boxShadow: '0rem 0rem 2rem rgba(0, 0, 0, 0.237)' }}>
         <div style={{ display: 'flex', gap: '1rem', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-          <input style={{ backgroundColor: 'transparent', borderStyle: 'none', width: '100%', outline: 'none' }} type="text" value={input} onChange={handleInputChange} />
+          <input style={{ backgroundColor: 'transparent', borderStyle: 'none', width: '100%', outline: 'none' }} type="text" value={input} onChange={handleInputChange} placeholder='Hi, Ask Quiestions to your Documents.'/>
           <button style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center', border: 'none', padding: '0rem', fontSize: '1.3rem', transition: '200ms' }} onClick={handleSendClick}><IoMdSend className='send_button' /></button>
         </div>
       </div>

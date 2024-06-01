@@ -1,1 +1,5 @@
 .env
+\venv
+\chroma_db
+.pdf
+data.pdf

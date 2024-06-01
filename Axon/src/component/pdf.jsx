@@ -4,22 +4,19 @@ import { MdOutlineChat } from "react-icons/md";
 import { FaCloudUploadAlt } from "react-icons/fa";
 
 export default function PDF() {
-  const [pdfText, setPdfText] = useState('');
-  const [context, setContext] = useState('');
   const [fileName, setFileName] = useState('');
   const [loading, setLoading] = useState(false); // Add loading state
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFileName(file.name);
-    console.log(fileName.replace(".pdf", ''));
   };
 
   const handleFileSubmit = async () => {
     const file = document.getElementById("pdfFile").files[0]; // Get file from input element
     if (file && file.type === 'application/pdf') {
       const formData = new FormData();
-      formData.append('pdfFile', file);
+      formData.append('file', file);
 
       try {
         setLoading(true); // Set loading state to true
@@ -28,30 +25,15 @@ export default function PDF() {
             'Content-Type': 'multipart/form-data',
           },
         });
-        setPdfText(response.data.response);
-        setContext(response.data.context);
         setLoading(false); // Set loading state to false
       } catch (error) {
-        alert('Error extracting text from PDF.');
+        alert(error.message);
         setLoading(false); // Set loading state to false
       }
     } else {
       alert('Please upload a PDF file.');
     }
   };
-
-  function DownloadJsonFile() {
-    if (loading) { // Disable download button if loading
-      return;
-    }
-    const jsonObject = { Data: context };
-    const jsonString = JSON.stringify(jsonObject);
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = fileName.replace(".pdf", '')+'.json';
-    link.click();
-  }
 
   return (
     <>
@@ -65,7 +47,7 @@ export default function PDF() {
           </div>
 
           <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
-            <input style={{backgroundColor: 'rgb(20, 20, 20)', display: 'flex', flexDirection: 'column', borderRadius: '1rem', color: 'white', padding: '3rem 1rem', border: '.4rem solid white'}} type="file" id="pdfFile" accept="application/pdf" />
+            <input style={{backgroundColor: 'rgb(20, 20, 20)', display: 'flex', flexDirection: 'column', borderRadius: '1rem', color: 'white', padding: '3rem 1rem', border: '.4rem solid white'}} type="file" name="file" id="pdfFile" accept="application/pdf" onChange={handleFileChange} />
             <button style={{backgroundColor: 'transparent', border: 'none', textAlign: 'center'}} onClick={handleFileSubmit}>{loading ? 'Sending...' : <FaCloudUploadAlt style={{fontSize: '3rem'}} className='send_button' />}</button>
           </div>
         </div>

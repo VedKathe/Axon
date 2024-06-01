@@ -14,7 +14,7 @@ export default function Dashboard() {
   return (
     <>
     <div style={{height: '100vh', width: '100vw', overflowY: 'hidden', display: 'flex'}}>
-        <div className='left_div' style={{height: '100%', display: 'flex', flex: '.16', flexDirection: 'column'}}>
+        <div className='left_div'>
             <div className='tab' style={{ width: 'auto', height: 'max-content', padding: '1rem 1.2rem', cursor: 'pointer', userSelect: 'none'}} onClick={() => handleOptionClick('ask')}>AXON</div>
             <div className='tab' style={{ width: 'auto', height: 'max-content', padding: '1rem 1.2rem', cursor: 'pointer', userSelect: 'none'}}  onClick={() => handleOptionClick('analyze')}>Analyze</div>
             <div className='tab' style={{ width: 'auto', height: 'max-content', padding: '1rem 1.2rem', cursor: 'pointer', userSelect: 'none'}}  onClick={() => handleOptionClick('quiz')}>Quiz</div>
