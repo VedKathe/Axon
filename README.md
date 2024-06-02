@@ -23,3 +23,13 @@ Chat, analyze, and test your knowledge on any topic.
 3. **Run React App**
    - Navigate to the `/Axon` directory
    - Run the command: `npm run dev`
+
+## Usage
+
+1. **Import a PDF File**
+   - Import a PDF file with data into Axon.
+   - Wait for it to finish processing (note: it might take some time, but be patient).
+
+2. **Analyze and Generate Questions**
+   - After the PDF is processed, click on "Analyze" to generate questions for the quiz.
+   - Note: You can generate as many questions as needed. There might be some inconsistencies and false information, so review the generated questions carefully.
