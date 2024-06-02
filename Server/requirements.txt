@@ -4,3 +4,4 @@ ollama
 langchain
 langchain_community
 PyMuPDF  # fitz is imported from PyMuPDF
+fastembed

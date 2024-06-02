@@ -5,3 +5,8 @@
 data.pdf
 quiz_data.json
 \dist
+*.json
+Server/quiz_data.json
+Server/quiz_data.json
+*.json
+Server/quiz_data.json

@@ -85,7 +85,7 @@ export default function Ask() {
       <div className='message_stack' style={{overflowY: 'scroll'}}>
         {stack.map((entry, index) => (
           <div key={index} style={{ textAlign: entry.role === 'user' ? 'right' : 'left' }}>
-            <div style={{ display: 'inline-block', padding: '10px', borderRadius: '10px', margin: '5px', backgroundColor: entry.role === 'user' ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)', color: 'black', maxWidth: '60%', boxShadow: entry.role === 'user' ? '0rem 0rem .4rem rgba(0, 174, 255, 0.300)' : '0rem 0rem .4rem rgba(212, 0, 255, 0.300)', textAlign: 'left'}}>
+            <div style={{ display: 'inline-block', padding: '10px', borderRadius: '10px', margin: '5px', backgroundColor: entry.role === 'user' ? 'rgb(255, 255, 255)' : 'rgb(255, 255, 255)', color: 'black', maxWidth: '80%', boxShadow: entry.role === 'user' ? '0rem 0rem .4rem rgba(0, 174, 255, 0.300)' : '0rem 0rem .4rem rgba(212, 0, 255, 0.300)', textAlign: 'left'}}>
               {entry.response}
             </div>
           </div>
