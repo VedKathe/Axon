@@ -28,6 +28,12 @@ export default function Quiz() {
   useEffect(() => {
     if (quizData) {
       const shuffledData = [...quizData.quiz];
+      // Shuffle questions
+      for (let i = shuffledData.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
+      }
+      // Shuffle options within each question
       shuffledData.forEach((question) => {
         for (let i = question.options.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -81,6 +87,13 @@ export default function Quiz() {
     setSelectedOption(null);
     setScore(0);
     setOptionColors([]);
+    // Shuffle questions again for a new quiz
+    const newShuffledData = [...shuffledQuizData];
+    for (let i = newShuffledData.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newShuffledData[i], newShuffledData[j]] = [newShuffledData[j], newShuffledData[i]];
+    }
+    setShuffledQuizData(newShuffledData);
   };
 
   return (
