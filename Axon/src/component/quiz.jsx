@@ -105,7 +105,7 @@ export default function Quiz() {
             {currentQuestionIndex < shuffledQuizData.length ? (
               <div style={{ padding: '1rem', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem'}}>
+                <div style={{display: 'flex', alignItems: 'center', gap: '1rem', justifyContent: 'space-between'}}>
                   <h1 style={{fontSize: '1.4rem'}}>{shuffledQuizData[currentQuestionIndex].question}</h1>
                   <div style={{backgroundColor: 'black', color: 'white', width: 'max-content', padding: '1rem', borderRadius: '1.2rem', fontSize: '1.2rem', fontWeight: '600' ,minHeight: '2rem', minWidth: '2rem', alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
                     <p>{score}</p>
@@ -120,6 +120,7 @@ export default function Quiz() {
                       style={{
                         color: 'white',
                         backgroundColor: 'black',
+                        minWidth: '13rem',
                         maxWidth: '40%',
                         cursor: selectedOption === null ? 'pointer' : 'not-allowed',
                         borderColor: optionColors[currentQuestionIndex] ? optionColors[currentQuestionIndex][option] : 'black',
