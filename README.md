@@ -18,11 +18,11 @@ Chat, analyze, and test your knowledge on any topic.
 
 2. **Run Python Server**
    - Navigate to the `/Server` directory
-   - Run the command: `python server.py`
+   - Run the command: ```python server.py```
 
 3. **Run React App**
    - Navigate to the `/Axon` directory
-   - Run the command: `npm run dev`
+   - Run the command: ```npm run dev```
   
 To install the necessary dependencies,
 
