@@ -23,6 +23,16 @@ Chat, analyze, and test your knowledge on any topic.
 3. **Run React App**
    - Navigate to the `/Axon` directory
    - Run the command: `npm run dev`
+  
+To install the necessary dependencies,
+
+2. **Install Dependencies**
+   - Run the following command in your terminal:
+     ```bash
+     pip install -r requirements.txt
+     ```
+
+This will install all the required packages for the Axon application.
 
 ## Usage
 
