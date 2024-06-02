@@ -7,6 +7,7 @@ from langchain_community.embeddings import OllamaEmbeddings
 from langchain.docstore.document import Document
 import fitz
 import os
+import json
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -36,6 +37,34 @@ def rag_chain(question):
     retrieved_doc = retriever.invoke(question)
     formatted_context = combine_doc(retrieved_doc)
     return ollama_llm(question, formatted_context)
+
+def question_chain(question):
+    if vectorstore is None:
+        return "No vector store has been created. Please upload a file first."
+    retriever = vectorstore.as_retriever()
+    retrieved_doc = retriever.invoke(question)
+    formatted_context = combine_doc(retrieved_doc)
+    return ollama_llm(question, formatted_context)
+
+import json
+
+def saveQuestionData(response):
+    # Parse the response string into a JSON object
+    new_data = json.loads(response)
+
+    # Load the existing data from the file
+    try:
+        with open("questions.json", "r") as f:
+            existing_data = json.load(f)
+    except FileNotFoundError:
+        existing_data = {"quiz": []}
+
+    # Extend the existing data with the new questions
+    existing_data["quiz"].extend(new_data["quiz"])
+
+    # Write the updated data back to the file
+    with open("quiz_data.json", "w") as f:
+        json.dump(existing_data, f)
 ############################################################################################
 ############################################################################################
 @app.route('/uploadFile', methods=['POST'])
@@ -68,6 +97,24 @@ def getQA():
 
     response = rag_chain(prompt)
     return jsonify({'response': response})
+############################################################################################
+############################################################################################
+@app.route('/generateQ', methods=['GET'])
+def generateQ():
+    response = question_chain('Create a multiple-choice questionnaire with exactly 10 questions using the given data format, each question should have four options, one correct answer, and an explanation for why the answer is correct; Input Data Format: [{ "question": "Sample question 1", "option": ["Option 1", "Option 2", "Option 3", "Option 4"], "answer": "Option 1", "explanation": "Explanation for why Option 1 is correct" }, { "question": "Sample question 2", "option": ["Option 1", "Option 2", "Option 3", "Option 4"], "answer": "Option 4", "explanation": "Explanation for why Option 4 is correct" }, ...] ; Output Data Format: { "quiz": [{ "question": "Question: [Your question here]", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "answer": "Correct Answer", "explanation": "Explanation for why the correct answer is correct." }, ... { "question": "Question: [Your question here]", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "answer": "Correct Answer", "explanation": "Explanation for why the correct answer is correct." }] }; Ensure the output data contains exactly 10 questions following the format provided.')
+    saveQuestionData(response)
+    return jsonify({'response': "Question generated"})
+############################################################################################
+############################################################################################
+@app.route('/getQuiz', methods=['GET'])
+def getQuiz():
+    try:
+        with open("quiz_data.json", "r") as f:
+            existing_data = json.load(f)
+            return existing_data
+    except FileNotFoundError:
+        existing_data = {"quiz": []}
+        return {'error':"File not loaded"}
 ############################################################################################
 ############################################################################################
 if __name__ == '__main__':
