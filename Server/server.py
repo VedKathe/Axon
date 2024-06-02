@@ -46,15 +46,13 @@ def question_chain(question):
     formatted_context = combine_doc(retrieved_doc)
     return ollama_llm(question, formatted_context)
 
-import json
-
 def saveQuestionData(response):
     # Parse the response string into a JSON object
     new_data = json.loads(response)
 
     # Load the existing data from the file
     try:
-        with open("questions.json", "r") as f:
+        with open("quiz_data.json", "r") as f:
             existing_data = json.load(f)
     except FileNotFoundError:
         existing_data = {"quiz": []}
