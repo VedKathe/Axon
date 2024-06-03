@@ -170,10 +170,10 @@ export default function Quiz() {
             )}
           </div>
         ) : (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-            <div style={{ textAlign: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', backgroundColor: 'rgb(19,19,19)' }}>
+            <div style={{ textAlign: 'center', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem'}}>
               <h1>Generate a quiz</h1>
-              <button onClick={handleGenerateClick} disabled={isGenerating}>
+              <button style={{color: 'white', backgroundColor: 'transparent', border: '.1rem solid white', borderRadius: '.5rem', width: 'max-content'}} onClick={handleGenerateClick} disabled={isGenerating}>
                 {isGenerating ? 'Generating...' : 'Generate Quiz'}
               </button>
             </div>
