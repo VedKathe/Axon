@@ -105,7 +105,7 @@ export default function Quiz() {
 
   return (
     <>
-      <div style={{ backgroundColor: 'white', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+      <div style={{ backgroundColor: 'white', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'start' }}>
         {shuffledQuizData ? (
           <div style={{ overflowY: 'auto' }}>
             {currentQuestionIndex < shuffledQuizData.length ? (
@@ -173,7 +173,7 @@ export default function Quiz() {
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', backgroundColor: 'rgb(19,19,19)' }}>
             <div style={{ textAlign: 'center', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem'}}>
               <h1>Generate a quiz</h1>
-              <button style={{color: 'white', backgroundColor: 'transparent', border: '.1rem solid white', borderRadius: '.5rem', width: 'max-content'}} onClick={handleGenerateClick} disabled={isGenerating}>
+              <button style={{color: 'white', backgroundColor: 'transparent', border: '.1rem solid white', borderRadius: '.5rem', width: 'max-content', padding : '1rem 2rem', cursor: 'pointer'}} onClick={handleGenerateClick} disabled={isGenerating}>
                 {isGenerating ? 'Generating...' : 'Generate Quiz'}
               </button>
             </div>
