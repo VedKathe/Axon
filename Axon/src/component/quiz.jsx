@@ -165,7 +165,7 @@ export default function Quiz() {
                 <h2 style={{ textAlign: 'center' }}>
                   Final score: {score} / {shuffledQuizData.length} questions answered.
                 </h2>
-                <button onClick={handleStartNewQuizClick}>Start new quiz</button>
+                <button style={{color: 'white', backgroundColor: 'transparent', border: '.1rem solid white', borderRadius: '.5rem', width: 'max-content', padding : '1rem 2rem', cursor: 'pointer'}} onClick={handleStartNewQuizClick}>Start new quiz</button>
               </div>
             )}
           </div>

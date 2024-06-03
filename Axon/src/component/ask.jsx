@@ -67,6 +67,8 @@ export default function Ask() {
     }
   };
 
+  
+
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'end', padding: '.5rem 1rem 1rem 1rem', gap: '.7rem', backgroundColor:'rgb(19,19,19)' }}>
 
