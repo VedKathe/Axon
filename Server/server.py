@@ -31,7 +31,7 @@ def extract_text_from_pdf(pdf_file):
 
 def ollama_llm(question, context):
     formatted_prompt = f"Question: {question}\n\n Context: {context}"
-    response = ollama.generate(model='mistral', prompt=formatted_prompt, stream=False)
+    response = ollama.generate(model='mistral', prompt=formatted_prompt, stream=False, options={"num_gpu":0,  "temperature": 1, "main_gpu": 1, "low_vram": False,})
     return response['response']
 
 def combine_doc(docs):

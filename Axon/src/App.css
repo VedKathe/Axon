@@ -74,9 +74,10 @@ h2{
 }
 
 .message_stack{
-  scrollbar-color: black transparent;
+  scrollbar-color: white transparent;
+  scrollbar-gutter: auto;
   scrollbar-width: thin;
-  scrollbar-arrow-color: white;
+  scrollbar-arrow-color: black;
 }
 
 .option{
